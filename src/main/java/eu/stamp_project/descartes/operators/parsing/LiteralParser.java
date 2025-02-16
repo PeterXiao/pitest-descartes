@@ -185,12 +185,17 @@ public class LiteralParser {
     }
   }
 
-  private static boolean isBlank(CharSequence cs) {
-    if (cs != null && cs.length() > 0) {
-      for (int i = 0; i < cs.length(); ++i) {
-        if (!Character.isWhitespace(cs.charAt(i))) {
-          return false;
-        }
+  private static boolean isBlankOrNull(CharSequence sequence) {
+    if (sequence == null || sequence.length() == 0) {
+      return true;
+    }
+    int length = sequence.length();
+    if (length == 0) {
+      return true;
+    }
+    for (int index = 0; index < length; index++) {
+      if (!Character.isWhitespace(sequence.charAt(index))) {
+        return false;
       }
     }
     return true;
