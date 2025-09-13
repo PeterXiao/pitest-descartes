@@ -39,7 +39,7 @@ public class LiteralParser {
     }
 
     public static Result error(String error) {
-      if (isBlank(error)) {
+      if (isBlankOrNull(error)) {
         throw new IllegalArgumentException(
             "Resulting error message can not be null, empty or blank.");
       }
@@ -67,7 +67,7 @@ public class LiteralParser {
   private LiteralLexer lexer;
 
   public Result parse(String line) {
-    if (isBlank(line)) {
+    if (isBlankOrNull(line)) {
       return Result.error("Input is null or blank");
     }
     try {
