@@ -1,4 +1,4 @@
-# Descartes: A Mutation Engine for PIT
+# Descartes: An Extreme Mutation Engine for PIT
 
 ![build-on-push](https://github.com/STAMP-project/pitest-descartes/workflows/build-on-push/badge.svg)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/eu.stamp-project/descartes/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/eu.stamp-project/descartes)
@@ -7,9 +7,9 @@
 
 #[[##]]# What is Descartes?
 
-Descartes evaluates the capability of your test suite to detect bugs using extreme mutation testing. It is able to find the worst tested methods in a project.
+Descartes evaluates the capability of your test suite to detect bugs using extreme mutation testing. It is able to find poorly tested methods in a project.
 
-Descartes is developed as a mutation engine plugin for [PIT](http://pitest.org) which implements extreme mutation operators as proposed in the paper [Will my tests tell me if I break this code?](http://dl.acm.org/citation.cfm?doid=2896941.2896944). It also works alongside other PIT extensions to provide more meaningful and actionable results improve results.
+Descartes is developed as a mutation engine plugin for [PIT](http://pitest.org) which implements extreme mutation operators as proposed in the paper [Will my tests tell me if I break this code?](http://dl.acm.org/citation.cfm?doid=2896941.2896944). It also works alongside other PIT extensions to provide descriptive and actionable reports.
 
 #[[##]]# Quick start with Maven
 
@@ -42,9 +42,9 @@ mvn clean package org.pitest:pitest-maven:mutationCoverage
 
 All options from PIT can be used. For more details check [the PIT documentation](https://pitest.org/quickstart/maven/). 
 
-Check [Running Descartes on you project](./running-on-your-project.html) for additional Descartes configuration options and how to use it with other build systems such as Gradle.
+Check [Running Descartes on you project](./running-on-your-project.html) for additional Descartes configuration options and how to use it with other build systems such as [Gradle](./running-on-your-project.html#Using_Gradle) or even directly from the command line.
 
-For quick configuration snippets showing how to use other testing frameworks such as JUnit 5 or TestNG and how to change Descartes' behavior check the [frequently used configurations](./frequent-configurations.html).
+Check the [frequently used configurations](./frequent-configurations.html) to find quick configuration snippets showing how to use other testing frameworks such as JUnit 5 or TestNG and how to change Descartes' default behavior.
 
 If you use a multi-module project take a look at [PitMP](https://github.com/STAMP-project/pitmp-maven-plugin).
 
@@ -52,8 +52,7 @@ You can check [here](./performance-comparison.html) a comparison between Descart
 
 #[[##]]# Quick start with the repository
 
-
-In a terminal, clone the repository:
+Clone the repository:
 ```
 git clone https://github.com/STAMP-project/pitest-descartes.git
 ```

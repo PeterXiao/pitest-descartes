@@ -1,7 +1,7 @@
-# Examples
+# Issues detected by Descartes
 
-Descartes has been applied to well-maintained and popular open source projects, and it has found relevant testing issues.
-This page shows concrete examples of poorly tested methods discovered on those projects with the help of Descartes.
+Descartes has been used on well-maintained and popular open source projects, and has uncovered relevant testing issues.
+This section presents concrete examples of methods that were covered by tests but not properly verified, illustrating the kinds of issues Descartes is able to detect.
 More details can be found [here](https://github.com/STAMP-project/descartes-experiments).
 
 ## Example #1 : A test case with no assertions

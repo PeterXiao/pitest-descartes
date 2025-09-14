@@ -12,6 +12,8 @@
             <item name="Overview" href="/index.html"/>
             <item name="How does it work?" href="/how-does-it-work.html"/>
             <item name="What can it find?" href="/examples.html"/>
+            <item name="Mutation operators" href="/mutation-operators.html" />
+            <item name="Skipping methods" href="/skipping-methods.html" />
         </menu>
         <menu name="How to use it?">
             <item name="Running Descartes" href="/running-on-your-project.html"/>
@@ -19,7 +21,7 @@
             <item name="Output formats" href="/output-formats.html"/>
         </menu>
         <menu name="More information">
-            <item name="Performance comparison" href="performance-comparison.html"/>
+            <item name="Comparison with Gregor" href="comparison.html"/>
             <item name="Papers and presentations" href="/papers-and-presentations.html"/>
         </menu>
     </body>

@@ -5,7 +5,7 @@
 Stable releases of Descartes are available from Maven Central.
 Descartes is a plugin for PIT, so they have to be used together.
 PIT integrates with majors test and build tools such as [Maven](https://maven.apache.org),
-[Ant](http://apache.ant.org) and [Gradle](https://gradle.org).
+[Ant](https://ant.apache.org/) and [Gradle](https://gradle.org).
 
 #[[##]]# Using Maven
 
@@ -220,7 +220,7 @@ The number of lines can be configured as follows:
 
 The line threshold is equal to 5 by default.
 
-## Using Gradle
+#[[##]]# Using Gradle
 Follow the [instructions](http://gradle-pitest-plugin.solidsoft.info/) to set up PIT for a project that uses [Gradle](https://gradle.org/).
 Add Descartes as a dependency of the `pitest` task
 
@@ -310,7 +310,7 @@ features = ['-DO_NOT_MUTATE()']
 #[[##]]# Running from the command line
 Descartes can be used when invoking PIT from the command line. To do this, follow [the instructions](http://pitest.org/quickstart/commandline/) to run PIT, include Descartes in the classpath specification and add `--mutationEngine=descartes`.
 
-## Installing and building from source
+#[[##]]#  Installing and building from source
 
 In a terminal, clone the repository:
 ```
