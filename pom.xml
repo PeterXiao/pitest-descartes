@@ -46,6 +46,10 @@
             <id>ossrh-central</id>
             <url>https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/</url>
         </repository>
+        <site>
+            <id>github-pages</id>
+            <url>scm:git:https://github.com/STAMP-project/pitest-descartes</url>
+        </site>
     </distributionManagement>
 
     <properties>
@@ -364,6 +368,39 @@
                                 <phase>verify</phase>
                                 <goals>
                                     <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- Site deployment -->
+                    <!-- https://maven.apache.org/plugins/maven-scm-publish-plugin/examples/one-module-configuration.html -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-site-plugin</artifactId>
+                        <version>3.21.0</version>
+                        <configuration>
+                            <!-- don't deploy site with maven-site-plugin -->
+                            <skipDeploy>true</skipDeploy>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-scm-publish-plugin</artifactId>
+                        <version>3.3.0</version>
+                        <configuration>
+                            <content>${project.reporting.outputDirectory}</content>
+                            <addUniqueDirectory>true</addUniqueDirectory>
+                            <scmBranch>gh-pages</scmBranch>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>scm-publish</id>
+                                <!-- deploy site with maven-scm-publish-plugin -->
+                                <phase>site-deploy</phase>
+                                <goals>
+                                    <goal>publish-scm</goal>
                                 </goals>
                             </execution>
                         </executions>
