@@ -25,7 +25,7 @@ public class SkipDoNotMutateFilter extends MutationFilter {
       return isMutationAllowed(doNotMutateAnnotation.get(), mutator);
     }
     doNotMutateAnnotation = getDoNotMutateAnnotation(owner.annotations());
-    return !doNotMutateAnnotation.isPresent()
+    return doNotMutateAnnotation.isEmpty()
         || isMutationAllowed(doNotMutateAnnotation.get(), mutator);
   }
 
@@ -51,7 +51,7 @@ public class SkipDoNotMutateFilter extends MutationFilter {
       return Set.of((String) parameter);
     }
     if (parameter instanceof List) {
-      HashSet<String> result = new HashSet<>();
+      Set<String> result = new HashSet<>();
       for (Object val : (List<?>) parameter) {
         if (val instanceof String) {
           result.add((String) val);

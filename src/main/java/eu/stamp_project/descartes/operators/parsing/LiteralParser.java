@@ -39,7 +39,7 @@ public class LiteralParser {
     }
 
     public static Result error(String error) {
-      if (isBlank(error)) {
+      if (isBlankOrNull(error)) {
         throw new IllegalArgumentException(
             "Resulting error message can not be null, empty or blank.");
       }
@@ -67,7 +67,7 @@ public class LiteralParser {
   private LiteralLexer lexer;
 
   public Result parse(String line) {
-    if (isBlank(line)) {
+    if (isBlankOrNull(line)) {
       return Result.error("Input is null or blank");
     }
     try {
@@ -185,12 +185,17 @@ public class LiteralParser {
     }
   }
 
-  private static boolean isBlank(CharSequence cs) {
-    if (cs != null && cs.length() > 0) {
-      for (int i = 0; i < cs.length(); ++i) {
-        if (!Character.isWhitespace(cs.charAt(i))) {
-          return false;
-        }
+  private static boolean isBlankOrNull(CharSequence sequence) {
+    if (sequence == null || sequence.length() == 0) {
+      return true;
+    }
+    int length = sequence.length();
+    if (length == 0) {
+      return true;
+    }
+    for (int index = 0; index < length; index++) {
+      if (!Character.isWhitespace(sequence.charAt(index))) {
+        return false;
       }
     }
     return true;

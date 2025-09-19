@@ -35,11 +35,11 @@ public enum ExtremeMutationResult {
       case TIMED_OUT:
       case MEMORY_ERROR:
         return DETECTED;
-      case STARTED:
-      case RUN_ERROR:
-      case NON_VIABLE:
-      case NOT_STARTED:
       default:
+        // STARTED:
+        // RUN_ERROR:
+        // NON_VIABLE:
+        // NOT_STARTED:
         return ERROR;
     }
   }

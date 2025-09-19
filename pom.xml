@@ -46,14 +46,18 @@
             <id>ossrh-central</id>
             <url>https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/</url>
         </repository>
+        <site>
+            <id>github-pages</id>
+            <url>scm:git:https://github.com/STAMP-project/pitest-descartes</url>
+        </site>
     </distributionManagement>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <github.global.server>github</github.global.server>
-        <pitest.version>1.20.0</pitest.version>
-        <maven.plugin.validation>BRIEF</maven.plugin.validation>
+        <pitest.version>1.20.2</pitest.version>
+        <linkXRef>false</linkXRef>
     </properties>
 
     <dependencies>
@@ -71,22 +75,25 @@
             <scope>provided</scope>
         </dependency>
 
+
+        <!-- Reporting -->
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
-            <version>2.3.32</version>
+            <version>2.3.34</version>
         </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.17.0</version>
+            <version>2.18.3</version> <!-- Ensure compatibility with json-schema-validator -->
         </dependency>
 
+        <!-- Test dependencies -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.10.2</version>
+            <version>5.13.4</version>
             <scope>test</scope>
         </dependency>
 
@@ -100,14 +107,14 @@
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>json-schema-validator</artifactId>
-            <version>1.4.0</version>
+            <version>1.5.9</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-nop</artifactId>
-            <version>2.1.0-alpha1</version>
+            <version>2.0.13</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -117,7 +124,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.4.1</version>
+                <version>3.6.1</version>
                 <executions>
                     <execution>
                         <id>enforce-maven</id>
@@ -133,7 +140,6 @@
                         </configuration>
                     </execution>
                 </executions>
-
             </plugin>
 
             <!-- Generate code from jFlex files -->
@@ -157,9 +163,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version>
+                <version>3.14.0</version>
                 <configuration>
-                    <release>9</release>
+                    <!-- Same as PIT -->
+                    <release>11</release>
                 </configuration>
             </plugin>
 
@@ -167,20 +174,19 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.3.1</version>
+                <version>3.6.0</version>
                 <configuration>
                     <failOnViolation>true</failOnViolation>
                     <violationSeverity>warning</violationSeverity>
                     <configLocation>google_checks.xml</configLocation>
                     <suppressionsLocation>configuration/checkstyle-suppressions.xml</suppressionsLocation>
                     <outputEncoding>UTF-8</outputEncoding>
-                    <linkXRef>false</linkXRef>
                 </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>com.puppycrawl.tools</groupId>
                         <artifactId>checkstyle</artifactId>
-                        <version>10.15.0</version>
+                        <version>10.26.1</version>
                     </dependency>
                 </dependencies>
                 <executions>
@@ -196,7 +202,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.21.2</version>
+                <version>3.27.0</version>
                 <configuration>
                     <failOnViolation>true</failOnViolation>
                     <printFailingErrors>true</printFailingErrors>
@@ -208,6 +214,7 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <phase>compile</phase>
                         <goals>
                             <goal>
                                 check
@@ -221,14 +228,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.5</version>
+                <version>3.5.4</version>
             </plugin>
 
             <!-- Include metadata in manifest file -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.4.2</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -260,27 +267,27 @@
                 </executions>
             </plugin>
 
-            <!-- Generates the documentation observing the right versions -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.3.1</version>
-                <executions>
-                    <execution>
-                        <!-- This execution avoids conflicts with the test resources -->
-                        <!-- Invoke as mvn resources:resources@gendoc -->
-                        <id>gendoc</id>
-                        <configuration>
-                            <outputDirectory>${basedir}</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>src/docgen</directory>
-                                    <filtering>true</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.21.0</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.doxia</groupId>
+                        <artifactId>doxia-module-markdown</artifactId>
+                        <version>2.0.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.maven.skins</groupId>
+                        <artifactId>maven-fluido-skin</artifactId>
+                        <version>2.1.0</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <generateProjectInfo>false</generateProjectInfo>
+                    <generateReports>false</generateReports>
+                    <generateSitemap>false</generateSitemap>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -298,17 +305,17 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-deploy-plugin</artifactId>
-                        <version>3.1.1</version>
+                        <version>3.1.4</version>
                     </plugin>
 
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-release-plugin</artifactId>
-                        <version>3.0.1</version>
+                        <version>3.1.1</version>
                         <configuration>
                             <tagNameFormat>descartes-@{version}</tagNameFormat>
                             <preparationGoals>
-                                clean verify resources:resources@gendoc
+                                clean verify
                             </preparationGoals>
                         </configuration>
                     </plugin>
@@ -316,7 +323,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.6.3</version>
+                        <version>3.11.3</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
@@ -330,7 +337,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
-                        <version>3.2.1</version>
+                        <version>3.3.1</version>
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
@@ -354,13 +361,46 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.2.2</version>
+                        <version>3.2.8</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
                                 <phase>verify</phase>
                                 <goals>
                                     <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- Site deployment -->
+                    <!-- https://maven.apache.org/plugins/maven-scm-publish-plugin/examples/one-module-configuration.html -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-site-plugin</artifactId>
+                        <version>3.21.0</version>
+                        <configuration>
+                            <!-- don't deploy site with maven-site-plugin -->
+                            <skipDeploy>true</skipDeploy>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-scm-publish-plugin</artifactId>
+                        <version>3.3.0</version>
+                        <configuration>
+                            <content>${project.reporting.outputDirectory}</content>
+                            <addUniqueDirectory>true</addUniqueDirectory>
+                            <scmBranch>gh-pages</scmBranch>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>scm-publish</id>
+                                <!-- deploy site with maven-scm-publish-plugin -->
+                                <phase>site-deploy</phase>
+                                <goals>
+                                    <goal>publish-scm</goal>
                                 </goals>
                             </execution>
                         </executions>
