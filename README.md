@@ -5,7 +5,7 @@
 
 *I mutate therefore I am*
 
-This document briefly explains what if Descartes and the minimum steps to use it or start using its repository. For a full documentation on how to use Descartes in other scenarios and how to configure it go to the [project's website](https://pites-descartes.github.io).
+This document briefly explains what if Descartes and the minimum steps to use it or start using its repository. For a full documentation on how to use Descartes in other scenarios and how to configure it go to the [project's website](https://stamp-project.github.io/pitest-descartes/).
 
 ## What is Descartes?
 
@@ -21,7 +21,7 @@ To use Descartes in a Maven project, add the following plugin configuration to y
 <plugin>
   <groupId>org.pitest</groupId>
   <artifactId>pitest-maven</artifactId>
-  <version>1.17.2</version>
+  <version>1.20.2</version>
   <configuration>
     <mutationEngine>descartes</mutationEngine>
   </configuration>
@@ -29,7 +29,7 @@ To use Descartes in a Maven project, add the following plugin configuration to y
     <dependency>
       <groupId>eu.stamp-project</groupId>
       <artifactId>descartes</artifactId>
-      <version>LATEST</version>
+      <version>1.3.34</version>
     </dependency>
   </dependencies>
 </plugin>
